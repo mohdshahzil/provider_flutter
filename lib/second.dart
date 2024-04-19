@@ -1,23 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:provider_flutter/list_provider.dart';
-import 'package:provider_flutter/second.dart';
 
-class Home extends StatefulWidget {
-  const Home({Key? key}) : super(key: key);
+class Second extends StatefulWidget {
+  const Second({super.key});
 
   @override
-  State<Home> createState() => _HomeState();
+  State<Second> createState() => _SecondState();
 }
 
-class _HomeState extends State<Home> {
+class _SecondState extends State<Second> {
   @override
   Widget build(BuildContext context) {
     return Consumer<NumbersListProvider>(
-      builder: (context, numbersProviderModel, child) => Scaffold(
+      builder: (context, numbersListProvider, child) => Scaffold(
         floatingActionButton: FloatingActionButton(
           onPressed: () {
-            numbersProviderModel.add();
+            numbersListProvider.add();
           },
           child: const Icon(Icons.add),
         ),
@@ -26,28 +25,24 @@ class _HomeState extends State<Home> {
           child: Column(
             children: [
               Text(
-                numbersProviderModel.numbers.last.toString(),
+                numbersListProvider.numbers.last.toString(),
                 style: const TextStyle(fontSize: 20),
               ),
-              Expanded(
+              Container(
+                height: 200,
+                width: double.maxFinite,
                 child: ListView.builder(
-                  itemCount: numbersProviderModel.numbers.length,
+                  scrollDirection: Axis.horizontal,
+                  itemCount: numbersListProvider.numbers.length,
                   itemBuilder: (context, index) {
                     return Text(
-                      numbersProviderModel.numbers[index].toString(),
+                      numbersListProvider.numbers[index].toString(),
                       style: const TextStyle(
                         fontSize: 20,
                       ),
                     );
                   },
                 ),
-              ),
-              ElevatedButton(
-                onPressed: () {
-                  Navigator.of(context).push(
-                      MaterialPageRoute(builder: (context) => const Second()));
-                },
-                child: const Text('Navigate to Second Screen'),
               ),
             ],
           ),
